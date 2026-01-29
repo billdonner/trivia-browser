@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Browser</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .config-bar {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .config-bar label {
+            font-weight: 500;
+            margin-right: 8px;
+        }
+
+        .config-bar input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 300px;
+            font-size: 14px;
+        }
+
+        .controls {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .controls select, .controls button {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .controls select {
+            min-width: 150px;
+        }
+
+        .controls button {
+            background: #3498db;
+            color: white;
+            border: none;
+            font-weight: 500;
+        }
+
+        .controls button:hover {
+            background: #2980b9;
+        }
+
+        .controls button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .stats {
+            background: #ecf0f1;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .questions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .category-badge {
+            background: #3498db;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .difficulty-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .difficulty-easy { background: #2ecc71; color: white; }
+        .difficulty-medium { background: #f39c12; color: white; }
+        .difficulty-hard { background: #e74c3c; color: white; }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .choices {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .choice {
+            padding: 12px 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .choice:hover {
+            border-color: #3498db;
+            background: #f8f9fa;
+        }
+
+        .choice.correct {
+            border-color: #2ecc71;
+            background: #d5f4e6;
+        }
+
+        .choice.incorrect {
+            border-color: #e74c3c;
+            background: #fdecea;
+        }
+
+        .choice.revealed.correct {
+            border-color: #2ecc71;
+            background: #d5f4e6;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .error {
+            background: #fdecea;
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            background: white;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Trivia Browser</h1>
+            <p>Browse and test trivia questions from the database</p>
+        </header>
+
+        <div class="config-bar">
+            <label for="serverUrl">Server URL:</label>
+            <input type="text" id="serverUrl" value="http://localhost:8080" placeholder="http://localhost:8080">
+        </div>
+
+        <div class="controls">
+            <select id="categorySelect">
+                <option value="">All Categories</option>
+            </select>
+
+            <select id="difficultySelect">
+                <option value="">All Difficulties</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+
+            <select id="countSelect">
+                <option value="5">5 Questions</option>
+                <option value="10" selected>10 Questions</option>
+                <option value="20">20 Questions</option>
+                <option value="50">50 Questions</option>
+            </select>
+
+            <button id="loadBtn" onclick="loadQuestions()">Load Questions</button>
+
+            <div class="stats" id="stats">No questions loaded</div>
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div id="questionsContainer" class="questions">
+            <div class="empty">Click "Load Questions" to browse trivia questions</div>
+        </div>
+    </div>
+
+    <script>
+        let categories = [];
+        let questions = [];
+
+        function getServerUrl() {
+            return document.getElementById('serverUrl').value.replace(/\/$/, '');
+        }
+
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${getServerUrl()}/api/v1/categories`);
+                if (!response.ok) throw new Error('Failed to load categories');
+                categories = await response.json();
+
+                const select = document.getElementById('categorySelect');
+                select.innerHTML = '<option value="">All Categories</option>';
+                categories.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat.id;
+                    option.textContent = `${cat.name} (${cat.questionCount || 0})`;
+                    select.appendChild(option);
+                });
+            } catch (err) {
+                console.error('Error loading categories:', err);
+            }
+        }
+
+        async function loadQuestions() {
+            const btn = document.getElementById('loadBtn');
+            const container = document.getElementById('questionsContainer');
+            const errorDiv = document.getElementById('error');
+            const statsDiv = document.getElementById('stats');
+
+            btn.disabled = true;
+            btn.textContent = 'Loading...';
+            errorDiv.style.display = 'none';
+            container.innerHTML = '<div class="loading">Loading questions...</div>';
+
+            try {
+                const categoryId = document.getElementById('categorySelect').value;
+                const difficulty = document.getElementById('difficultySelect').value;
+                const count = document.getElementById('countSelect').value;
+
+                let url = `${getServerUrl()}/api/v1/questions/random?count=${count}`;
+                if (categoryId) url += `&categoryId=${categoryId}`;
+                if (difficulty) url += `&difficulty=${difficulty}`;
+
+                const response = await fetch(url);
+                if (!response.ok) {
+                    const text = await response.text();
+                    throw new Error(text || `HTTP ${response.status}`);
+                }
+
+                questions = await response.json();
+
+                if (questions.length === 0) {
+                    container.innerHTML = '<div class="empty">No questions found matching your filters</div>';
+                    statsDiv.textContent = 'No questions found';
+                } else {
+                    renderQuestions();
+                    statsDiv.textContent = `Showing ${questions.length} question${questions.length !== 1 ? 's' : ''}`;
+                }
+            } catch (err) {
+                errorDiv.textContent = `Error: ${err.message}`;
+                errorDiv.style.display = 'block';
+                container.innerHTML = '<div class="empty">Failed to load questions</div>';
+                statsDiv.textContent = 'Error loading questions';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Load Questions';
+            }
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, qIndex) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.innerHTML = `
+                    <div class="question-header">
+                        <span class="category-badge">${escapeHtml(q.categoryName || 'Unknown')}</span>
+                        <span class="difficulty-badge difficulty-${q.difficulty}">${q.difficulty}</span>
+                    </div>
+                    <div class="question-text">${escapeHtml(q.text)}</div>
+                    <div class="choices" id="choices-${qIndex}">
+                        ${q.choices.map((choice, cIndex) => `
+                            <div class="choice" data-question="${qIndex}" data-choice="${cIndex}" data-correct="${choice.isCorrect}" onclick="selectChoice(this)">
+                                ${escapeHtml(choice.text)}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${qIndex}">
+                        ${q.explanation ? escapeHtml(q.explanation) : 'The correct answer is: ' + escapeHtml(q.choices[q.correctChoiceIndex]?.text || '')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectChoice(element) {
+            const qIndex = element.dataset.question;
+            const isCorrect = element.dataset.correct === 'true';
+            const choicesDiv = document.getElementById(`choices-${qIndex}`);
+            const explanationDiv = document.getElementById(`explanation-${qIndex}`);
+
+            // Already answered
+            if (choicesDiv.classList.contains('answered')) return;
+            choicesDiv.classList.add('answered');
+
+            // Mark all choices
+            choicesDiv.querySelectorAll('.choice').forEach(choice => {
+                if (choice.dataset.correct === 'true') {
+                    choice.classList.add('revealed', 'correct');
+                }
+            });
+
+            // Mark selected if wrong
+            if (!isCorrect) {
+                element.classList.add('incorrect');
+            }
+
+            // Show explanation
+            explanationDiv.classList.add('show');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Load categories on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCategories();
+
+            // Reload categories when server URL changes
+            document.getElementById('serverUrl').addEventListener('change', loadCategories);
+        });
+    </script>
+</body>
+</html>
