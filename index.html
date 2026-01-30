@@ -24,12 +24,40 @@
             padding: 20px;
         }
 
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: #2c3e50;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-tab.active {
+            background: #3498db;
+        }
+
         header {
             background: #2c3e50;
             color: white;
             padding: 20px;
+            border-radius: 0 0 8px 8px;
             margin-bottom: 20px;
-            border-radius: 8px;
         }
 
         header h1 {
@@ -42,27 +70,16 @@
             font-size: 0.9rem;
         }
 
-        .config-bar {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        /* Tab Content */
+        .tab-content {
+            display: none;
         }
 
-        .config-bar label {
-            font-weight: 500;
-            margin-right: 8px;
+        .tab-content.active {
+            display: block;
         }
 
-        .config-bar input {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 300px;
-            font-size: 14px;
-        }
-
+        /* Controls */
         .controls {
             background: white;
             padding: 15px;
@@ -75,349 +92,1030 @@
             align-items: center;
         }
 
-        .controls select, .controls button {
+        .controls select, .controls button, .controls input {
             padding: 10px 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 14px;
-            cursor: pointer;
         }
 
         .controls select {
             min-width: 150px;
         }
 
-        .controls button {
-            background: #3498db;
-            color: white;
+        .btn {
+            padding: 10px 20px;
             border: none;
+            border-radius: 4px;
+            cursor: pointer;
             font-weight: 500;
+            transition: all 0.2s;
         }
 
-        .controls button:hover {
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
             background: #2980b9;
         }
 
-        .controls button:disabled {
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #219a52;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn:disabled {
             background: #bdc3c7;
             cursor: not-allowed;
         }
 
-        .stats {
-            background: #ecf0f1;
-            padding: 10px 15px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            color: #7f8c8d;
-        }
-
-        .questions {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .question-card {
+        /* Cards */
+        .card {
             background: white;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
-        .question-header {
+        .card h2 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge-category { background: #3498db; color: white; }
+        .badge-easy { background: #27ae60; color: white; }
+        .badge-medium { background: #f39c12; color: white; }
+        .badge-hard { background: #e74c3c; color: white; }
+
+        /* Quiz Mode */
+        .quiz-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .quiz-progress {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 8px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .category-badge {
+        .quiz-progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
             background: #3498db;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            transition: width 0.3s;
         }
 
-        .difficulty-badge {
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+        .quiz-question {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .quiz-question-text {
+            font-size: 1.3rem;
             font-weight: 500;
+            margin-bottom: 25px;
+            text-align: center;
         }
 
-        .difficulty-easy { background: #2ecc71; color: white; }
-        .difficulty-medium { background: #f39c12; color: white; }
-        .difficulty-hard { background: #e74c3c; color: white; }
-
-        .question-text {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 15px;
+        .quiz-choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .choices {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        @media (max-width: 600px) {
-            .choices {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .choice {
-            padding: 12px 15px;
+        .quiz-choice {
+            padding: 15px 20px;
             border: 2px solid #ecf0f1;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
+            text-align: left;
+            background: white;
+            font-size: 1rem;
         }
 
-        .choice:hover {
+        .quiz-choice:hover:not(.disabled) {
             border-color: #3498db;
             background: #f8f9fa;
         }
 
-        .choice.correct {
-            border-color: #2ecc71;
-            background: #d5f4e6;
+        .quiz-choice.selected {
+            border-color: #3498db;
+            background: #ebf5fb;
         }
 
-        .choice.incorrect {
+        .quiz-choice.correct {
+            border-color: #27ae60;
+            background: #d5f5e3;
+        }
+
+        .quiz-choice.incorrect {
             border-color: #e74c3c;
-            background: #fdecea;
+            background: #fadbd8;
         }
 
-        .choice.revealed.correct {
-            border-color: #2ecc71;
-            background: #d5f4e6;
+        .quiz-choice.disabled {
+            cursor: default;
         }
 
-        .explanation {
-            margin-top: 15px;
-            padding: 12px;
+        .quiz-feedback {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .quiz-feedback.correct {
+            background: #d5f5e3;
+            color: #27ae60;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #fadbd8;
+            color: #e74c3c;
+        }
+
+        /* Results */
+        .results-container {
+            text-align: center;
+        }
+
+        .results-score {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #3498db;
+            margin: 20px 0;
+        }
+
+        .results-message {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #7f8c8d;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .results-stat {
             background: #f8f9fa;
-            border-left: 4px solid #3498db;
-            border-radius: 0 4px 4px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .results-stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .results-stat-label {
+            color: #7f8c8d;
             font-size: 0.9rem;
+        }
+
+        /* Stats Tab */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-card-label {
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .accuracy-ring {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .accuracy-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .accuracy-ring-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* History List */
+        .history-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-item-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .history-item-info small {
+            color: #7f8c8d;
+        }
+
+        .history-item-score {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Challenge Modal */
+        .modal {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        .explanation.show {
-            display: block;
+        .modal.active {
+            display: flex;
         }
 
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        /* Settings */
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Empty State */
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        /* Loading */
         .loading {
             text-align: center;
             padding: 40px;
             color: #7f8c8d;
         }
 
-        .error {
-            background: #fdecea;
-            color: #e74c3c;
-            padding: 15px;
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            color: white;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 1001;
         }
 
-        .empty {
-            text-align: center;
-            padding: 40px;
-            color: #7f8c8d;
-            background: white;
-            border-radius: 8px;
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success { background: #27ae60; }
+        .toast.error { background: #e74c3c; }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .results-stats {
+                grid-template-columns: 1fr;
+            }
+            .nav-tab {
+                font-size: 0.85rem;
+                padding: 12px 8px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('quiz')">Quiz</button>
+            <button class="nav-tab" onclick="showTab('browse')">Browse</button>
+            <button class="nav-tab" onclick="showTab('stats')">Stats</button>
+            <button class="nav-tab" onclick="showTab('settings')">Settings</button>
+        </nav>
+
         <header>
             <h1>Trivia Browser</h1>
-            <p>Browse and test trivia questions from the database</p>
+            <p>Play quizzes, challenge friends, track your stats</p>
         </header>
 
-        <div class="config-bar">
-            <label for="serverUrl">Server URL:</label>
-            <input type="text" id="serverUrl" value="http://localhost:8080" placeholder="http://localhost:8080">
+        <!-- Quiz Tab -->
+        <div id="tab-quiz" class="tab-content active">
+            <div id="quiz-setup" class="card">
+                <h2>Start a Quiz</h2>
+                <div class="controls">
+                    <select id="quizCategorySelect">
+                        <option value="">All Categories</option>
+                    </select>
+                    <select id="quizDifficultySelect">
+                        <option value="">All Difficulties</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <select id="quizCountSelect">
+                        <option value="5">5 Questions</option>
+                        <option value="10" selected>10 Questions</option>
+                        <option value="15">15 Questions</option>
+                        <option value="20">20 Questions</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
+                </div>
+            </div>
+
+            <div id="quiz-play" class="quiz-container" style="display: none;">
+                <div class="quiz-progress">
+                    <span id="quiz-current">1</span>
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+                    </div>
+                    <span id="quiz-total">10</span>
+                </div>
+                <div class="quiz-question">
+                    <div class="quiz-question-header" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+                        <span class="badge badge-category" id="quiz-category">Category</span>
+                        <span class="badge" id="quiz-difficulty">Medium</span>
+                    </div>
+                    <div class="quiz-question-text" id="quiz-question-text">Question goes here?</div>
+                    <div class="quiz-choices" id="quiz-choices"></div>
+                    <div class="quiz-feedback" id="quiz-feedback" style="display: none;"></div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="btn btn-primary" id="quiz-next-btn" onclick="nextQuestion()" style="display: none;">Next Question</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-results" class="card results-container" style="display: none;">
+                <h2>Quiz Complete!</h2>
+                <div class="results-score" id="results-score">0%</div>
+                <div class="results-message" id="results-message">Good effort!</div>
+                <div class="results-stats">
+                    <div class="results-stat">
+                        <div class="results-stat-value" id="results-correct">0</div>
+                        <div class="results-stat-label">Correct</div>
+                    </div>
+                    <div class="results-stat">
+                        <div class="results-stat-value" id="results-total">0</div>
+                        <div class="results-stat-label">Total</div>
+                    </div>
+                    <div class="results-stat">
+                        <div class="results-stat-value" id="results-category">-</div>
+                        <div class="results-stat-label">Category</div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button class="btn btn-primary" onclick="showQuizSetup()">Play Again</button>
+                    <button class="btn btn-success" onclick="showChallengeModal()">Challenge Friend</button>
+                </div>
+            </div>
         </div>
 
-        <div class="controls">
-            <select id="categorySelect">
-                <option value="">All Categories</option>
-            </select>
-
-            <select id="difficultySelect">
-                <option value="">All Difficulties</option>
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
-
-            <select id="countSelect">
-                <option value="5">5 Questions</option>
-                <option value="10" selected>10 Questions</option>
-                <option value="20">20 Questions</option>
-                <option value="50">50 Questions</option>
-            </select>
-
-            <button id="loadBtn" onclick="loadQuestions()">Load Questions</button>
-
-            <div class="stats" id="stats">No questions loaded</div>
+        <!-- Browse Tab -->
+        <div id="tab-browse" class="tab-content">
+            <div class="controls">
+                <select id="browseCategorySelect">
+                    <option value="">All Categories</option>
+                </select>
+                <select id="browseDifficultySelect">
+                    <option value="">All Difficulties</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+                <select id="browseCountSelect">
+                    <option value="10" selected>10 Questions</option>
+                    <option value="25">25 Questions</option>
+                    <option value="50">50 Questions</option>
+                </select>
+                <button class="btn btn-primary" onclick="loadBrowseQuestions()">Load Questions</button>
+            </div>
+            <div id="browse-questions"></div>
         </div>
 
-        <div id="error" class="error" style="display: none;"></div>
+        <!-- Stats Tab -->
+        <div id="tab-stats" class="tab-content">
+            <div class="card" style="text-align: center;">
+                <h2>Your Stats</h2>
+                <div class="accuracy-ring">
+                    <svg width="150" height="150">
+                        <circle cx="75" cy="75" r="65" fill="none" stroke="#ecf0f1" stroke-width="10"/>
+                        <circle cx="75" cy="75" r="65" fill="none" stroke="#3498db" stroke-width="10"
+                                stroke-dasharray="408" stroke-dashoffset="408" id="accuracy-circle"/>
+                    </svg>
+                    <div class="accuracy-ring-text" id="accuracy-text">0%</div>
+                </div>
+            </div>
 
-        <div id="questionsContainer" class="questions">
-            <div class="empty">Click "Load Questions" to browse trivia questions</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-value" id="stat-quizzes">0</div>
+                    <div class="stat-card-label">Quizzes Played</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="stat-questions">0</div>
+                    <div class="stat-card-label">Questions Answered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="stat-correct">0</div>
+                    <div class="stat-card-label">Correct Answers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value" id="stat-streak">0</div>
+                    <div class="stat-card-label">Day Streak</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Quiz History</h2>
+                <div class="history-list" id="history-list">
+                    <div class="empty">No quiz history yet</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="tab-settings" class="tab-content">
+            <div class="card">
+                <h2>Settings</h2>
+                <div class="setting-item">
+                    <div>
+                        <strong>Server URL</strong>
+                        <p style="color: #7f8c8d; font-size: 0.9rem;">API server address</p>
+                    </div>
+                    <input type="text" id="serverUrl" value="http://localhost:8080" style="width: 250px;">
+                </div>
+                <div class="setting-item">
+                    <div>
+                        <strong>Clear History</strong>
+                        <p style="color: #7f8c8d; font-size: 0.9rem;">Delete all quiz history and stats</p>
+                    </div>
+                    <button class="btn btn-danger" onclick="clearHistory()">Clear</button>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Challenge Modal -->
+    <div class="modal" id="challenge-modal">
+        <div class="modal-content">
+            <h3>Challenge a Friend</h3>
+            <input type="text" id="challenge-name" placeholder="Your Name">
+            <input type="email" id="challenge-your-email" placeholder="Your Email">
+            <input type="email" id="challenge-friend-email" placeholder="Friend's Email">
+            <div class="modal-actions">
+                <button class="btn" onclick="closeChallengeModal()">Cancel</button>
+                <button class="btn btn-success" onclick="sendChallenge()">Send Challenge</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
     <script>
+        // State
         let categories = [];
-        let questions = [];
+        let quizQuestions = [];
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let quizAnswered = false;
+        let currentQuizCategory = '';
+        let currentQuizDifficulty = '';
+
+        // LocalStorage keys
+        const STORAGE_KEYS = {
+            HISTORY: 'trivia_history',
+            STATS: 'trivia_stats',
+            SERVER_URL: 'trivia_server_url'
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadServerUrl();
+            loadCategories();
+            loadStats();
+            loadHistory();
+        });
 
         function getServerUrl() {
             return document.getElementById('serverUrl').value.replace(/\/$/, '');
         }
 
+        function loadServerUrl() {
+            const saved = localStorage.getItem(STORAGE_KEYS.SERVER_URL);
+            if (saved) {
+                document.getElementById('serverUrl').value = saved;
+            }
+            document.getElementById('serverUrl').addEventListener('change', (e) => {
+                localStorage.setItem(STORAGE_KEYS.SERVER_URL, e.target.value);
+                loadCategories();
+            });
+        }
+
+        // Tab Navigation
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'stats') {
+                loadStats();
+                loadHistory();
+            }
+        }
+
+        // Categories
         async function loadCategories() {
             try {
                 const response = await fetch(`${getServerUrl()}/api/v1/categories`);
                 if (!response.ok) throw new Error('Failed to load categories');
                 categories = await response.json();
 
-                const select = document.getElementById('categorySelect');
-                select.innerHTML = '<option value="">All Categories</option>';
-                categories.forEach(cat => {
-                    const option = document.createElement('option');
-                    option.value = cat.id;
-                    option.textContent = `${cat.name} (${cat.questionCount || 0})`;
-                    select.appendChild(option);
+                ['quizCategorySelect', 'browseCategorySelect'].forEach(id => {
+                    const select = document.getElementById(id);
+                    select.innerHTML = '<option value="">All Categories</option>';
+                    categories.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat.id;
+                        option.textContent = `${cat.name} (${cat.questionCount || 0})`;
+                        select.appendChild(option);
+                    });
                 });
             } catch (err) {
                 console.error('Error loading categories:', err);
             }
         }
 
-        async function loadQuestions() {
-            const btn = document.getElementById('loadBtn');
-            const container = document.getElementById('questionsContainer');
-            const errorDiv = document.getElementById('error');
-            const statsDiv = document.getElementById('stats');
+        // Quiz Functions
+        async function startQuiz() {
+            const categoryId = document.getElementById('quizCategorySelect').value;
+            const difficulty = document.getElementById('quizDifficultySelect').value;
+            const count = document.getElementById('quizCountSelect').value;
 
-            btn.disabled = true;
-            btn.textContent = 'Loading...';
-            errorDiv.style.display = 'none';
+            currentQuizCategory = categoryId ? categories.find(c => c.id === categoryId)?.name : 'All Categories';
+            currentQuizDifficulty = difficulty || 'Mixed';
+
+            try {
+                let url = `${getServerUrl()}/api/v1/questions/random?count=${count}`;
+                if (categoryId) url += `&categoryId=${categoryId}`;
+                if (difficulty) url += `&difficulty=${difficulty}`;
+
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Failed to load questions');
+
+                quizQuestions = await response.json();
+                if (quizQuestions.length === 0) {
+                    showToast('No questions found', 'error');
+                    return;
+                }
+
+                currentQuestionIndex = 0;
+                correctAnswers = 0;
+                document.getElementById('quiz-setup').style.display = 'none';
+                document.getElementById('quiz-results').style.display = 'none';
+                document.getElementById('quiz-play').style.display = 'block';
+                document.getElementById('quiz-total').textContent = quizQuestions.length;
+
+                showQuestion();
+            } catch (err) {
+                showToast('Error: ' + err.message, 'error');
+            }
+        }
+
+        function showQuestion() {
+            const q = quizQuestions[currentQuestionIndex];
+            quizAnswered = false;
+
+            document.getElementById('quiz-current').textContent = currentQuestionIndex + 1;
+            document.getElementById('quiz-progress-fill').style.width =
+                `${((currentQuestionIndex) / quizQuestions.length) * 100}%`;
+
+            document.getElementById('quiz-category').textContent = q.categoryName || 'Unknown';
+            const diffBadge = document.getElementById('quiz-difficulty');
+            diffBadge.textContent = q.difficulty;
+            diffBadge.className = `badge badge-${q.difficulty}`;
+
+            document.getElementById('quiz-question-text').textContent = q.text;
+
+            const choicesDiv = document.getElementById('quiz-choices');
+            choicesDiv.innerHTML = q.choices.map((choice, index) => `
+                <button class="quiz-choice" onclick="selectAnswer(${index})" data-index="${index}" data-correct="${choice.isCorrect}">
+                    ${escapeHtml(choice.text)}
+                </button>
+            `).join('');
+
+            document.getElementById('quiz-feedback').style.display = 'none';
+            document.getElementById('quiz-next-btn').style.display = 'none';
+        }
+
+        function selectAnswer(index) {
+            if (quizAnswered) return;
+            quizAnswered = true;
+
+            const q = quizQuestions[currentQuestionIndex];
+            const isCorrect = q.choices[index].isCorrect;
+
+            if (isCorrect) correctAnswers++;
+
+            // Update UI
+            document.querySelectorAll('.quiz-choice').forEach((btn, i) => {
+                btn.classList.add('disabled');
+                if (q.choices[i].isCorrect) {
+                    btn.classList.add('correct');
+                } else if (i === index) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.style.display = 'block';
+            feedback.className = `quiz-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.textContent = isCorrect ? 'Correct!' : `Wrong! The answer was: ${q.choices[q.correctChoiceIndex].text}`;
+
+            const nextBtn = document.getElementById('quiz-next-btn');
+            nextBtn.style.display = 'inline-block';
+            nextBtn.textContent = currentQuestionIndex < quizQuestions.length - 1 ? 'Next Question' : 'See Results';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-play').style.display = 'none';
+            document.getElementById('quiz-results').style.display = 'block';
+
+            const percentage = Math.round((correctAnswers / quizQuestions.length) * 100);
+            document.getElementById('results-score').textContent = `${percentage}%`;
+            document.getElementById('results-correct').textContent = correctAnswers;
+            document.getElementById('results-total').textContent = quizQuestions.length;
+            document.getElementById('results-category').textContent = currentQuizCategory;
+
+            let message = 'Keep practicing!';
+            if (percentage >= 90) message = 'Outstanding!';
+            else if (percentage >= 70) message = 'Great job!';
+            else if (percentage >= 50) message = 'Good effort!';
+            document.getElementById('results-message').textContent = message;
+
+            // Save to history
+            saveQuizResult({
+                date: new Date().toISOString(),
+                category: currentQuizCategory,
+                difficulty: currentQuizDifficulty,
+                correct: correctAnswers,
+                total: quizQuestions.length,
+                percentage: percentage,
+                questionIds: quizQuestions.map(q => q.id)
+            });
+        }
+
+        function showQuizSetup() {
+            document.getElementById('quiz-results').style.display = 'none';
+            document.getElementById('quiz-play').style.display = 'none';
+            document.getElementById('quiz-setup').style.display = 'block';
+        }
+
+        // Browse Functions
+        async function loadBrowseQuestions() {
+            const container = document.getElementById('browse-questions');
             container.innerHTML = '<div class="loading">Loading questions...</div>';
 
             try {
-                const categoryId = document.getElementById('categorySelect').value;
-                const difficulty = document.getElementById('difficultySelect').value;
-                const count = document.getElementById('countSelect').value;
+                const categoryId = document.getElementById('browseCategorySelect').value;
+                const difficulty = document.getElementById('browseDifficultySelect').value;
+                const count = document.getElementById('browseCountSelect').value;
 
                 let url = `${getServerUrl()}/api/v1/questions/random?count=${count}`;
                 if (categoryId) url += `&categoryId=${categoryId}`;
                 if (difficulty) url += `&difficulty=${difficulty}`;
 
                 const response = await fetch(url);
-                if (!response.ok) {
-                    const text = await response.text();
-                    throw new Error(text || `HTTP ${response.status}`);
-                }
+                if (!response.ok) throw new Error('Failed to load questions');
 
-                questions = await response.json();
+                const questions = await response.json();
 
                 if (questions.length === 0) {
-                    container.innerHTML = '<div class="empty">No questions found matching your filters</div>';
-                    statsDiv.textContent = 'No questions found';
-                } else {
-                    renderQuestions();
-                    statsDiv.textContent = `Showing ${questions.length} question${questions.length !== 1 ? 's' : ''}`;
+                    container.innerHTML = '<div class="empty">No questions found</div>';
+                    return;
                 }
+
+                container.innerHTML = questions.map((q, qIndex) => `
+                    <div class="card">
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <span class="badge badge-category">${escapeHtml(q.categoryName || 'Unknown')}</span>
+                            <span class="badge badge-${q.difficulty}">${q.difficulty}</span>
+                        </div>
+                        <h3 style="margin-bottom: 15px;">${escapeHtml(q.text)}</h3>
+                        <div id="browse-choices-${qIndex}">
+                            ${q.choices.map((c, cIndex) => `
+                                <div class="quiz-choice" onclick="revealBrowseAnswer(${qIndex}, ${cIndex}, ${c.isCorrect})"
+                                     data-correct="${c.isCorrect}" style="margin-bottom: 8px;">
+                                    ${escapeHtml(c.text)}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('');
             } catch (err) {
-                errorDiv.textContent = `Error: ${err.message}`;
-                errorDiv.style.display = 'block';
-                container.innerHTML = '<div class="empty">Failed to load questions</div>';
-                statsDiv.textContent = 'Error loading questions';
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Load Questions';
+                container.innerHTML = `<div class="card" style="color: #e74c3c;">Error: ${err.message}</div>`;
             }
         }
 
-        function renderQuestions() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
+        function revealBrowseAnswer(qIndex, cIndex, isCorrect) {
+            const container = document.getElementById(`browse-choices-${qIndex}`);
+            if (container.classList.contains('revealed')) return;
+            container.classList.add('revealed');
 
-            questions.forEach((q, qIndex) => {
-                const card = document.createElement('div');
-                card.className = 'question-card';
-                card.innerHTML = `
-                    <div class="question-header">
-                        <span class="category-badge">${escapeHtml(q.categoryName || 'Unknown')}</span>
-                        <span class="difficulty-badge difficulty-${q.difficulty}">${q.difficulty}</span>
-                    </div>
-                    <div class="question-text">${escapeHtml(q.text)}</div>
-                    <div class="choices" id="choices-${qIndex}">
-                        ${q.choices.map((choice, cIndex) => `
-                            <div class="choice" data-question="${qIndex}" data-choice="${cIndex}" data-correct="${choice.isCorrect}" onclick="selectChoice(this)">
-                                ${escapeHtml(choice.text)}
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="explanation" id="explanation-${qIndex}">
-                        ${q.explanation ? escapeHtml(q.explanation) : 'The correct answer is: ' + escapeHtml(q.choices[q.correctChoiceIndex]?.text || '')}
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function selectChoice(element) {
-            const qIndex = element.dataset.question;
-            const isCorrect = element.dataset.correct === 'true';
-            const choicesDiv = document.getElementById(`choices-${qIndex}`);
-            const explanationDiv = document.getElementById(`explanation-${qIndex}`);
-
-            // Already answered
-            if (choicesDiv.classList.contains('answered')) return;
-            choicesDiv.classList.add('answered');
-
-            // Mark all choices
-            choicesDiv.querySelectorAll('.choice').forEach(choice => {
-                if (choice.dataset.correct === 'true') {
-                    choice.classList.add('revealed', 'correct');
+            container.querySelectorAll('.quiz-choice').forEach((el, i) => {
+                el.classList.add('disabled');
+                if (el.dataset.correct === 'true') {
+                    el.classList.add('correct');
+                } else if (i === cIndex) {
+                    el.classList.add('incorrect');
                 }
             });
-
-            // Mark selected if wrong
-            if (!isCorrect) {
-                element.classList.add('incorrect');
-            }
-
-            // Show explanation
-            explanationDiv.classList.add('show');
         }
 
+        // Stats Functions
+        function loadStats() {
+            const stats = getStats();
+            const accuracy = stats.totalQuestions > 0
+                ? Math.round((stats.totalCorrect / stats.totalQuestions) * 100)
+                : 0;
+
+            document.getElementById('stat-quizzes').textContent = stats.quizzesPlayed;
+            document.getElementById('stat-questions').textContent = stats.totalQuestions;
+            document.getElementById('stat-correct').textContent = stats.totalCorrect;
+            document.getElementById('stat-streak').textContent = stats.currentStreak;
+            document.getElementById('accuracy-text').textContent = `${accuracy}%`;
+
+            // Animate accuracy ring
+            const circle = document.getElementById('accuracy-circle');
+            const circumference = 408; // 2 * PI * 65
+            const offset = circumference - (accuracy / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        function loadHistory() {
+            const history = getHistory();
+            const container = document.getElementById('history-list');
+
+            if (history.length === 0) {
+                container.innerHTML = '<div class="empty">No quiz history yet</div>';
+                return;
+            }
+
+            container.innerHTML = history.slice(0, 20).map(h => `
+                <div class="history-item">
+                    <div class="history-item-info">
+                        <h4>${escapeHtml(h.category)}</h4>
+                        <small>${new Date(h.date).toLocaleDateString()} - ${h.difficulty}</small>
+                    </div>
+                    <div class="history-item-score" style="color: ${h.percentage >= 70 ? '#27ae60' : h.percentage >= 50 ? '#f39c12' : '#e74c3c'}">
+                        ${h.correct}/${h.total} (${h.percentage}%)
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getStats() {
+            const saved = localStorage.getItem(STORAGE_KEYS.STATS);
+            return saved ? JSON.parse(saved) : {
+                quizzesPlayed: 0,
+                totalQuestions: 0,
+                totalCorrect: 0,
+                currentStreak: 0,
+                lastPlayedDate: null
+            };
+        }
+
+        function getHistory() {
+            const saved = localStorage.getItem(STORAGE_KEYS.HISTORY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveQuizResult(result) {
+            // Update history
+            const history = getHistory();
+            history.unshift(result);
+            localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(history.slice(0, 100)));
+
+            // Update stats
+            const stats = getStats();
+            stats.quizzesPlayed++;
+            stats.totalQuestions += result.total;
+            stats.totalCorrect += result.correct;
+
+            // Update streak
+            const today = new Date().toDateString();
+            const lastPlayed = stats.lastPlayedDate ? new Date(stats.lastPlayedDate).toDateString() : null;
+            const yesterday = new Date(Date.now() - 86400000).toDateString();
+
+            if (lastPlayed === yesterday) {
+                stats.currentStreak++;
+            } else if (lastPlayed !== today) {
+                stats.currentStreak = 1;
+            }
+            stats.lastPlayedDate = new Date().toISOString();
+
+            localStorage.setItem(STORAGE_KEYS.STATS, JSON.stringify(stats));
+        }
+
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all history and stats?')) {
+                localStorage.removeItem(STORAGE_KEYS.HISTORY);
+                localStorage.removeItem(STORAGE_KEYS.STATS);
+                loadStats();
+                loadHistory();
+                showToast('History cleared', 'success');
+            }
+        }
+
+        // Challenge Functions
+        let lastQuizQuestionIds = [];
+
+        function showChallengeModal() {
+            lastQuizQuestionIds = quizQuestions.map(q => q.id);
+            document.getElementById('challenge-modal').classList.add('active');
+        }
+
+        function closeChallengeModal() {
+            document.getElementById('challenge-modal').classList.remove('active');
+        }
+
+        async function sendChallenge() {
+            const name = document.getElementById('challenge-name').value.trim();
+            const yourEmail = document.getElementById('challenge-your-email').value.trim();
+            const friendEmail = document.getElementById('challenge-friend-email').value.trim();
+
+            if (!name || !yourEmail || !friendEmail) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${getServerUrl()}/api/v1/challenges`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        challengerName: name,
+                        challengerEmail: yourEmail,
+                        challengerScore: correctAnswers,
+                        challengedEmail: friendEmail,
+                        questionIds: lastQuizQuestionIds,
+                        categoryName: currentQuizCategory,
+                        difficulty: currentQuizDifficulty
+                    })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.reason || 'Failed to send challenge');
+                }
+
+                closeChallengeModal();
+                showToast('Challenge sent!', 'success');
+            } catch (err) {
+                showToast('Error: ' + err.message, 'error');
+            }
+        }
+
+        // Utilities
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // Load categories on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            loadCategories();
-
-            // Reload categories when server URL changes
-            document.getElementById('serverUrl').addEventListener('change', loadCategories);
-        });
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
     </script>
 </body>
 </html>
